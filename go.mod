@@ -1,4 +1,4 @@
-module github.com/Suplab-Team/test-task-go/tree/IskanderSh/protos
+module github.com/IskanderSh/test-task-protos
 
 go 1.21.5
 
