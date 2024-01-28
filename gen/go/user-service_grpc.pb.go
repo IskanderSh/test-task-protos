@@ -19,11 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	User_Create_FullMethodName            = "/users.User/Create"
-	User_Get_FullMethodName               = "/users.User/Get"
-	User_Update_FullMethodName            = "/users.User/Update"
-	User_Delete_FullMethodName            = "/users.User/Delete"
-	User_GetAdditionalInfo_FullMethodName = "/users.User/GetAdditionalInfo"
+	User_Create_FullMethodName = "/users.User/Create"
+	User_Get_FullMethodName    = "/users.User/Get"
+	User_Update_FullMethodName = "/users.User/Update"
+	User_Delete_FullMethodName = "/users.User/Delete"
 )
 
 // UserClient is the client API for User service.
@@ -38,8 +37,6 @@ type UserClient interface {
 	Update(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	// Delete deletes user
 	Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
-	// GetAdditionalInfo gets user's additional information (orders and requests)
-	GetAdditionalInfo(ctx context.Context, in *GetAdditionalInfoRequest, opts ...grpc.CallOption) (*GetAdditionalInfoResponse, error)
 }
 
 type userClient struct {
@@ -86,15 +83,6 @@ func (c *userClient) Delete(ctx context.Context, in *DeleteUserRequest, opts ...
 	return out, nil
 }
 
-func (c *userClient) GetAdditionalInfo(ctx context.Context, in *GetAdditionalInfoRequest, opts ...grpc.CallOption) (*GetAdditionalInfoResponse, error) {
-	out := new(GetAdditionalInfoResponse)
-	err := c.cc.Invoke(ctx, User_GetAdditionalInfo_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -107,8 +95,6 @@ type UserServer interface {
 	Update(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	// Delete deletes user
 	Delete(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
-	// GetAdditionalInfo gets user's additional information (orders and requests)
-	GetAdditionalInfo(context.Context, *GetAdditionalInfoRequest) (*GetAdditionalInfoResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -127,9 +113,6 @@ func (UnimplementedUserServer) Update(context.Context, *UpdateUserRequest) (*Upd
 }
 func (UnimplementedUserServer) Delete(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
-}
-func (UnimplementedUserServer) GetAdditionalInfo(context.Context, *GetAdditionalInfoRequest) (*GetAdditionalInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAdditionalInfo not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -216,24 +199,6 @@ func _User_Delete_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_GetAdditionalInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAdditionalInfoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).GetAdditionalInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_GetAdditionalInfo_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetAdditionalInfo(ctx, req.(*GetAdditionalInfoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -256,10 +221,6 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _User_Delete_Handler,
-		},
-		{
-			MethodName: "GetAdditionalInfo",
-			Handler:    _User_GetAdditionalInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -14,8 +14,6 @@ service User {
   rpc Update (UpdateUserRequest) returns (UpdateUserResponse);
   // Delete deletes user
   rpc Delete (DeleteUserRequest) returns (DeleteUserResponse);
-  // GetAdditionalInfo gets user's additional information (orders and requests)
-  rpc GetAdditionalInfo (GetAdditionalInfoRequest) returns (GetAdditionalInfoResponse);
 }
 
 message CreateUserRequest {
@@ -59,23 +57,4 @@ message DeleteUserRequest {
 
 message DeleteUserResponse {
   bool ok = 1; // ok = 1 if user id deleted successfully
-}
-
-message GetAdditionalInfoRequest {
-  string uuid = 1;
-}
-
-message GetAdditionalInfoResponse {
-  repeated GetAdditionalOrders orders = 1;
-  repeated GetAdditionalRequest requests = 2;
-}
-
-// Additional info about user's orders
-message GetAdditionalOrders {
-  string order = 1;
-}
-
-// Additional info about user's requests
-message GetAdditionalRequest {
-  string request = 1;
 }
