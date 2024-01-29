@@ -6,25 +6,12 @@ option go_package = "./userv1";
 
 // User is service for CRUD operations with users (only admin could use this service)
 service User {
-  // Create creates new user.
-  rpc Create (CreateUserRequest) returns (CreateUserResponse);
   // Get gets user's info
   rpc Get (GetUserRequest) returns (GetUserResponse);
   // Update updates user's info
   rpc Update (UpdateUserRequest) returns (UpdateUserResponse);
   // Delete deletes user
   rpc Delete (DeleteUserRequest) returns (DeleteUserResponse);
-}
-
-message CreateUserRequest {
-  string name = 1;
-  string surname = 2;
-  string email = 3;
-  string role = 4; // admin or ordinary user
-}
-
-message CreateUserResponse {
-  string uuid = 1; // uuid of the created user
 }
 
 message GetUserRequest {
