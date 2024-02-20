@@ -1,0 +1,33 @@
+syntax = 'proto3';
+
+package auth;
+
+option go_package = './authv1';
+
+// Auth is service for Authorization
+service Auth {
+  // SignUp registers new users
+  rpc SignUp (SignUpRequest) returns (SignUpResponse);
+  // SignIn login for existed user
+  rpc SignIn (SignInRequest) returns (SignInResponse);
+}
+
+message SignUpRequest {
+  string name = 1;
+  string surname = 2;
+  string password = 3;
+  string email = 4;
+}
+
+message SignUpResponse {
+  string uuid = 1;
+}
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string uuid = 1;
+}
