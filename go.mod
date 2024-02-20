@@ -1,4 +1,4 @@
-module github.com/IskanderSh/test-task-protos
+module github.com/IskanderSh/test-task-protos/v2
 
 go 1.21.5
 
